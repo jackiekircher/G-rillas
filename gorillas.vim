@@ -5,9 +5,17 @@
 
 " ** JUMP SHIP ** "
 if v:version < 600 || !has("ruby")
-  echomsg "GORILLAS REQUIRES RUBY SUPPORT"
+  echomsg 'Your version of vim must be compiled with ruby support'
   finish
 end
+
+if !exists('loaded_genutils')
+  runtime plugin/genutils.vim
+endif
+if !exists('loaded_genutils') || loaded_genutils < 200
+  echomsg 'You need the latest version of genutils.vim plugin'
+  finish
+endif
 
 " ** LOAD FILE? ** "
 if exists("loaded_gorillas")
@@ -55,7 +63,14 @@ function! gorillas#Gorillas()
 endfunction
 
 function! s:play()
+  " create a new window and overwrite vim configurations as needed
+  call genutils#SetupScratchBuffer()
+  setlocal noreadonly
+  setlocal nonumber
+
+  " load the game!
   ruby load "gorillas.rb"
+  rubydo GorillasGame.new
 endfunction
 
 let &cpo = s:user_cpo " restore user's compatible-mode
