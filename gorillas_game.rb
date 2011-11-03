@@ -6,7 +6,13 @@ class GorillasGame
     @height = @window.height
     @width  = @window.width
 
-    start_game
+    if @height < 20 || @width < 70
+      clear_screen
+      VIM::message("Your window is too small, please resize it to at least 70x20")
+      VIM::command('q!')
+    else
+      start_game
+    end
   end
 
   def start_game
