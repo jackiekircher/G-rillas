@@ -15,15 +15,15 @@ class GorillasGame
 
   def display_menu
     clear_screen
-    print_to_screen((@width/2)-4, (@height/2)-1, "Gorillas")
+    print_to_screen((@width/2)-4, (@height/2)-1, "G\u00f6rillas")
   end
 
 
   private
 
   def print_to_screen(x, y, str)
-    x = (x > 0) ? x : 1
-    y = (y > 0) ? y : 1
+    x = (x < 0) ? 0 : x
+    y = (y < 1) ? 1 : y
 
     new_line = @buffer[y]
     new_line[x, str.length] = str
@@ -31,10 +31,12 @@ class GorillasGame
   end
 
   def clear_screen
+    VIM::evaluate("genutils#OptClearBuffer()")
     blank_line = " "*@width
-    (0...@height).each do |line|
+    @buffer[1] = blank_line
+    (1...@height).each do |line|
       @buffer.append(line, blank_line)
     end
-    @buffer.delete(@height) # append adds another line, we don't want it
+    #@buffer.delete(1) # append adds another line, we don't want it
   end
 end
