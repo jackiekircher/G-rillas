@@ -51,19 +51,18 @@ function! s:Gorillas(...)
 endfunction
 
 function! gorillas#Gorillas()
-
   try
     call s:play()
   catch /^Vim:Interrupt$/
-    " Do nothing.
+    " Do nothing?
   finally
-
+    " Still nothing?
   endtry
-  
 endfunction
 
 function! s:play()
   " create a new window and overwrite vim configurations as needed
+  exec "tabnew G\u00f6rillas"
   call genutils#SetupScratchBuffer()
   setlocal noreadonly
   setlocal nonumber
