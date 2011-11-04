@@ -43,6 +43,5 @@ class GorillasGame
     (1...@height).each do |line|
       @buffer.append(line, blank_line)
     end
-    #@buffer.delete(1) # append adds another line, we don't want it
   end
 end
