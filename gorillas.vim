@@ -26,7 +26,7 @@ let loaded_gorillas = 1
 let s:user_cpo = &cpo " store current compatible-mode
 set cpo&vim           " go into noncompatible-mode
 
-" ** CONFIGURATION ** "
+" ## CONFIGURATION ## "
 " variable script path
 if !exists("gorillas_path")
   let s:vim_path = split(&runtimepath, ',')
@@ -36,41 +36,33 @@ else
   unlet gorillas_path
 end
 
-" ** SAFE FUNCTION MAPPING **"
-" or something...
-"if !hasmapto('<Plug>StartGorillas')
-"  map <unique> <Leader>a <Plug>StartGorillas
-"endif
-"noremap <unique> <script> <Plug>StartGorillas
-"noremap <SID>StartGorillas :call <SID>StartGorillas()<CR>
-
-command! -nargs=? Gorillas :call <SID>Gorillas(<args>)
+" ## new command: Goillas ## "
+command! -nargs=0 Gorillas :call <SID>Gorillas(<args>)
 
 function! s:Gorillas(...)
   call gorillas#Gorillas()
 endfunction
 
 function! gorillas#Gorillas()
-
   try
     call s:play()
   catch /^Vim:Interrupt$/
-    " Do nothing.
+    " Do nothing?
   finally
-
+    " Still nothing?
   endtry
-  
 endfunction
 
 function! s:play()
   " create a new window and overwrite vim configurations as needed
-  call genutils#SetupScratchBuffer()
-  setlocal noreadonly
-  setlocal nonumber
+  "exec "tabnew G\u00f6rillas"
+  "call genutils#SetupScratchBuffer()
+  "setlocal noreadonly
+  "setlocal nonumber
 
   " load the game!
-  ruby load "gorillas.rb"
-  rubydo GorillasGame.new
+  ruby load "lib/gorillas.rb"
+  ruby GorillasGame.new
 endfunction
 
 let &cpo = s:user_cpo " restore user's compatible-mode
