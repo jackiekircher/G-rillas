@@ -19,6 +19,22 @@ class GorillasGame
     display_splash
     wait_for_input("any")
     display_menu
+
+    # start game loop
+    while true
+      input = get_char(0)
+
+      if input == 'q' || input == '\x1b' #<ESC>
+        response = prompt("Are you sure want to quit? (y/N) ")
+        if response == 'y'
+          quit
+          return
+        end
+        redraw
+      end
+
+      wait 50
+    end
   end
 
   def display_splash
@@ -92,12 +108,23 @@ class GorillasGame
     VIM::command("redraw")
   end
 
+  def get_char(timeout)
+    char = VIM::evaluate("getchar(#{timeout})")
+    return nil if char.nil?
+
+    char.chr
+  end
+
   def prompt(question)
     VIM::message('prompting...')
-    return VIM::evaluate("input('#{question}')")
+    return VIM::evaluate("input('#{question}')").chomp
   end
 
   def wait(time)
     VIM::command("sleep #{time}m")
+  end
+
+  def quit
+    VIM::command('q!')
   end
 end
