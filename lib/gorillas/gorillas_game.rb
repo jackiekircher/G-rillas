@@ -21,7 +21,9 @@ class GorillasGame
 
   def display_menu
     clear_screen
-    print_to_screen((@width/2)-4, (@height/2)-1, "G\u00f6rillas")
+    print_to_screen((@width/2)-6, (@height/2)-2, "( G\u00f6rillas )")
+    print_to_screen((@width/2)-7, (@height/2)+2, "press space to")
+    print_to_screen((@width/2)-5, (@height/2)+3, "start game")
   end
 
 
